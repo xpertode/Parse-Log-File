@@ -13,5 +13,6 @@ fi
 echo "Parsing log file: $1"
 echo 'Following request took longest time:'
 echo -e "time:\trequest:"
-cat $1 | grep 'Completed' | cut -d \( -f 1 | awk '{ print substr($NF,0,length($NF)-2),$1 }' | sort -rn | head -1
+cat tmp_more_than_50 | grep -v "\-\-" | awk '{key=$0; getline; print key ", " $0;}' | cut -d \( -f 1 | \
+awk '{printf "%s", substr($NF,0,length($NF)-2) OFS;{for(i=1;i<11;i++)printf "%s",$i OFS; printf ORS}}' | sort -rn | head -1
 exit 0
